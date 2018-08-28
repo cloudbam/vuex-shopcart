@@ -29,6 +29,8 @@ const getters = {
     shoplist:state => state.shop_list,
     //购物车的列表
     cartProducts:state=>{
+        // 先遍历added数组的中的{id，num}这些对象，
+        ///在将查找到的id好通过shop_list数组进行查找保存到product
         return state.added.map(({id,num})=>{
             let product = state.shop_list.find(n=>n.id == id)
             // console.info('product',product)
@@ -82,7 +84,10 @@ const actions = {
 const mutations = {
     //添加到购物车操作
     add(state,{id}){
+        // 定义变量 先存放再查找查找一下added数组中是否存在一个这个id, 
+        
         let record = state.added.find(n=>n.id == id);
+       //如果返回值不为空 则进行存值 否则说明这个id是存在的 就进行num 累加
         if(!record){
             state.added.push({
                 id,
